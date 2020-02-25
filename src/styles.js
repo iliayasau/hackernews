@@ -62,6 +62,7 @@ export const Filter = styled.input`
   box-shadow: none;
   max-width: 100%;
   width: calc(100% - 1.25em);
+  margin-bottom: 30px;
 `;
 
 export const List = styled.ul`
@@ -81,13 +82,11 @@ export const ListItem = styled.li`
 
 export const ImageContainer = styled.div`
   width: 100%;
-  max-width: unset;
   text-align: center;
   padding-bottom: 15px;
   min-height: 200px;
   @media (min-width: 992px) {
-    width: unset;
-    max-width: 200px;
+    width: 200px;
     text-align: left;
     padding-bottom: 0;
   }
