@@ -12,10 +12,9 @@ export const Wrapper = styled.div`
 
 export const GoogleFonts = importGoogleFonts(createGlobalStyle, null, [ 'Roboto' ]);
 
-export const Container = styled.div`
+export const TitleContainer = styled.div`
   width: 100%;
   min-width: 375px;
-  background: ${props => (props.theme === 'Light' ? 'white' : '#424242')};
   margin-right: auto;
   margin-left: auto;
   @media (min-width: 576px) {
@@ -32,6 +31,10 @@ export const Container = styled.div`
   }
 `;
 
+export const Header = styled.div`
+  background: ${props => (props.theme === 'Light' ? '#eeeeee' : '#333333')};
+`;
+
 export const Row = styled.div`
   padding-right: 15px;
   padding-left: 15px;
@@ -44,9 +47,30 @@ export const Title = styled.h1`
   color: ${props => (props.theme === 'Light' ? '#0085a1' : '#00d1b2')};
   margin-top: 0;
   padding-top: 30px;
+  padding-bottom: 30px;
   @media (min-width: 992px) {
     font-size: 80px;
     padding-top: 60px;
+    padding-bottom: 60px;
+  }
+`;
+
+export const Container = styled.div`
+  width: 100%;
+  min-width: 375px;
+  margin-right: auto;
+  margin-left: auto;
+  @media (min-width: 576px) {
+    max-width: 540px;
+  }
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 1140px;
   }
 `;
 
@@ -104,7 +128,7 @@ export const Switch = styled.input`
     top: 4px;
     left: 0;
     width: 2.8rem;
-    height: 1.5rem;
+    height: 1.4rem;
     border: .1rem solid transparent;
     border-radius: 4px;
     background: #b5b5b5;
@@ -113,13 +137,13 @@ export const Switch = styled.input`
   &+label::after {
     display: block;
     position: absolute;
-    top: .6rem;
-    left: .3rem;
+    top: .58rem;
+    left: .35rem;
     width: 15px;
     height: 15px;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    border-radius: 4px;
+    border-radius: 3px;
     background: #fff;
     transition: all .25s ease-out;
     content: '';
@@ -128,7 +152,7 @@ export const Switch = styled.input`
     background: #00d1b2;
   }
   &:checked+label::after {
-    left: 1.6rem;
+    left: 1.7rem;
   }
 `;
 
@@ -276,7 +300,7 @@ export const Button = styled.button`
   border-radius: 5px;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   cursor: pointer;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   &:hover {
     background: ${props => (props.theme === 'Light' ? '#00657b' : '#0a8774')};
   }
