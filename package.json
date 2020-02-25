@@ -5,8 +5,8 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
-    "grabity": "^1.0.5",
     "import-google-fonts": "0.0.2",
+    "link-preview-js": "^2.0.1",
     "react": "16.8.6",
     "react-bottom-scroll-listener": "^3.0.0",
     "react-dom": "16.8.6",

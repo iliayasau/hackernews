@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import grabity from 'grabity';
+import { getLinkPreview } from 'link-preview-js';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import {
   GoogleFonts, Container, Title, Filter, List, ListItem,
@@ -13,16 +13,13 @@ function Image({ url, alt }) {
   React.useEffect(() => {
     async function getImage() {
       const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-      try {
-        const response = await grabity.grabIt(proxyUrl+url);
-        if (response && response.image) {
-          const { image } = response;
-          setImage(image);
-        } else {
-          setImage('https://icons.iconarchive.com/icons/thehoth/seo/256/seo-article-icon.png');
-        }
-      } catch (err) {
-        console.error(err);
+      const response = await getLinkPreview(proxyUrl+url);
+      if (response && response.images.length) {
+        const { images } = response;
+        console.log('images: ', images);
+        setImage(images[0]);
+      } else {
+        setImage('https://icons.iconarchive.com/icons/thehoth/seo/256/seo-article-icon.png');
       }
     }
     getImage();
