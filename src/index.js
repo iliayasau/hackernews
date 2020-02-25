@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { getLinkPreview } from 'link-preview-js';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import {
-  GoogleFonts, Container, Title, RadioGroup, Radio, Label, Filter,
-  List, ListItem, ImageContainer, Image, LinkContainer, Link, Button
+  Wrapper, GoogleFonts, Container, Title, SwitchContainer, Switch, RadioGroup, Radio,
+  Label, Filter, List, ListItem, ImageContainer, Image, LinkContainer, Link, ButtonWrapper, Button
 } from './styles';
 
 function Thumbnail({ url, alt }) {
@@ -29,8 +29,24 @@ function Thumbnail({ url, alt }) {
   );
 }
 
-function OddEvenFilter({ oddEvenFilter, setOddEvenFilter }) {
+function ThemeSwitcher({ theme, setTheme }) {
+  let newTheme;
+  if (theme === 'Light') {
+    newTheme = 'Dark';
+  } if (theme === 'Dark') {
+    newTheme = 'Light';
+  }
+  return (
+    <form>
+      <SwitchContainer>
+        <Switch type="checkbox" id="switchTheme" checked={theme === 'Dark'} onChange={() => setTheme(newTheme)} />
+        <Label for="switchTheme" theme={theme}>Selected theme: {theme}</Label>
+      </SwitchContainer>
+    </form>
+  );
+}
 
+function OddEvenFilter({ oddEvenFilter, setOddEvenFilter, theme }) {
   return (
     <form>
       <RadioGroup>
@@ -43,7 +59,7 @@ function OddEvenFilter({ oddEvenFilter, setOddEvenFilter }) {
             checked={oddEvenFilter === 0}
             onClick={() => setOddEvenFilter(0)}
           />
-          <Label for="button1">All</Label>
+          <Label for="button1" theme={theme}>All</Label>
         </Radio>
         <Radio>
           <input
@@ -54,7 +70,7 @@ function OddEvenFilter({ oddEvenFilter, setOddEvenFilter }) {
             checked={oddEvenFilter === 1}
             onClick={() => setOddEvenFilter(1)}
           />
-          <Label for="button2">Odd</Label>
+          <Label for="button2" theme={theme}>Odd</Label>
         </Radio>
         <Radio>
           <input
@@ -65,14 +81,14 @@ function OddEvenFilter({ oddEvenFilter, setOddEvenFilter }) {
             checked={oddEvenFilter === 2}
             onClick={() => setOddEvenFilter(2)}
           />
-          <Label for="button3">Even</Label>
+          <Label for="button3" theme={theme}>Even</Label>
         </Radio>
       </RadioGroup>
     </form>
   );
 }
 
-function HackerNewsPosts({ posts, filter, oddEvenFilter }) {
+function HackerNewsPosts({ posts, filter, oddEvenFilter, theme }) {
   if (posts.length === 0) {
     return <div>Loading...</div>;
   }
@@ -95,7 +111,7 @@ function HackerNewsPosts({ posts, filter, oddEvenFilter }) {
                 <Thumbnail url={post.url} alt={post.title} />
               </ImageContainer>
               <LinkContainer>
-                <Link href={post.url}>{index + 1}. {post.title}</Link>
+                <Link theme={theme} href={post.url}>{index + 1}. {post.title}</Link>
               </LinkContainer>
             </ListItem>
           )
@@ -108,6 +124,7 @@ function HackerNewsPosts({ posts, filter, oddEvenFilter }) {
 
 function App() {
   const [posts, setPosts] = React.useState([]);
+  const [theme, setTheme] = React.useState('Light');
   const [oddEvenFilter, setOddEvenFilter] = React.useState(0);
   const [filter, setFilter] = React.useState('');
   const [quantity, setQuantity] = React.useState(30);
@@ -142,7 +159,7 @@ function App() {
     setQuantity(updatedQuantity);
   }
 
-  useBottomScrollListener(loadMorePosts);
+  // useBottomScrollListener(loadMorePosts);
 
   function filterPosts(event) {
     const value = event.target.value.toLowerCase();
@@ -150,18 +167,21 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <Wrapper theme={theme}>
       <GoogleFonts />
-      <Container>
-        <Title>HackerNews</Title>
-        <OddEvenFilter oddEvenFilter={oddEvenFilter} setOddEvenFilter={setOddEvenFilter} />
+      <Container theme={theme}>
+        <Title theme={theme}>HackerNews</Title>
+        <ThemeSwitcher theme={theme} setTheme={setTheme} />
+        <OddEvenFilter oddEvenFilter={oddEvenFilter} setOddEvenFilter={setOddEvenFilter} theme={theme} />
         <Filter placeholder="Filter" onChange={e => filterPosts(e)} />
-        <HackerNewsPosts posts={posts} filter={filter} oddEvenFilter={oddEvenFilter} />
-        <Button onClick={() => loadMorePosts()}>
-          Load more posts
-        </Button>
+        <HackerNewsPosts posts={posts} filter={filter} oddEvenFilter={oddEvenFilter} theme={theme} />
+        <ButtonWrapper>
+          <Button onClick={() => loadMorePosts()}>
+            Load more posts
+          </Button>
+        </ButtonWrapper>
       </Container>
-    </div>
+    </Wrapper>
   );
 }
 

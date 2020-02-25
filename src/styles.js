@@ -1,10 +1,19 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import importGoogleFonts from 'import-google-fonts';
 
+export const Wrapper = styled.div`
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: ${props => (props.theme === 'Light' ? 'white' : '#424242')};
+`;
+
 export const GoogleFonts = importGoogleFonts(createGlobalStyle, null, [ 'Roboto' ]);
 
 export const Container = styled.div`
   width: 100%;
+  background: ${props => (props.theme === 'Light' ? 'white' : '#424242')};
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
@@ -27,9 +36,69 @@ export const Title = styled.h1`
   font-size: 40px;
   font-weight: 500;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #0085a1;
+  color: ${props => (props.theme === 'Light' ? '#0085a1' : '#00d1b2')};
+  margin-top: 0;
+  padding-top: 30px;
   @media (min-width: 992px) {
     font-size: 80px;
+    padding-top: 60px;
+  }
+`;
+
+export const SwitchContainer = styled.div`
+  position: relative;
+  height: 50px;
+`;
+
+export const Switch = styled.input`
+  outline: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+  position: absolute;
+  opacity: 0;
+  &+label {
+    position: relative;
+    display: initial;
+    font-size: 1rem;
+    line-height: initial;
+    padding-left: 3.5rem;
+    padding-top: 0.5rem;
+    cursor: pointer;
+  }
+  &+label::before {
+    position: absolute;
+    display: block;
+    top: 4px;
+    left: 0;
+    width: 2.8rem;
+    height: 1.5rem;
+    border: .1rem solid transparent;
+    border-radius: 4px;
+    background: #b5b5b5;
+    content: '';
+  }
+  &+label::after {
+    display: block;
+    position: absolute;
+    top: .6rem;
+    left: .3rem;
+    width: 15px;
+    height: 15px;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    border-radius: 4px;
+    background: #fff;
+    transition: all .25s ease-out;
+    content: '';
+  }
+  &:checked+label::before {
+    background: #00d1b2;
+  }
+  &:checked+label::after {
+    left: 1.6rem;
   }
 `;
 
@@ -53,6 +122,7 @@ export const Label = styled.label`
   font-size: 16px;
   line-height: 1;
   padding-left: 15px;
+  color: ${props => (props.theme === 'Light' ? '#424242' : 'white')};
   @media (min-width: 992px) {
     font-size: 21px;
   }
@@ -142,6 +212,7 @@ export const Link = styled.a`
   text-decoration: none;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #424242;
+  color: ${props => (props.theme === 'Light' ? '#424242' : '#00d1b2')};
   &:hover {
     color: #0085a1;
   }
@@ -150,9 +221,13 @@ export const Link = styled.a`
   }
 `;
 
+export const ButtonWrapper = styled.div`
+  padding-bottom: 60px;
+`;
+
 export const Button = styled.button`
+  display: block;
   float: right;
-  margin-bottom: 30px;
   background: #0085a1;
   border: none;
   color: white;
