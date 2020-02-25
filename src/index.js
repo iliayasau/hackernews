@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import { getLinkPreview } from 'link-preview-js';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import {
-  Wrapper, GoogleFonts, Container, Row, Title, SettingsWrapper, Form, SwitchContainer, Switch, RadioGroup, Radio,
-  Label, Filter, Loading, List, ListItem, ImageContainer, Image, LinkContainer, Link, ButtonWrapper, Button
+  Wrapper, GoogleFonts, Container, Header, TitleContainer, Row, Title, SettingsWrapper, 
+  Form, SwitchContainer, Switch, RadioGroup, Radio, Label, Filter, Loading,
+  List, ListItem, ImageContainer, Image, LinkContainer, Link, ButtonWrapper, Button
 } from './styles';
 
 function Thumbnail({ url, alt }) {
@@ -169,9 +170,15 @@ function App() {
   return (
     <Wrapper theme={theme}>
       <GoogleFonts />
+      <Header theme={theme}>
+        <TitleContainer>
+          <Row>
+            <Title theme={theme}>HackerNews</Title>
+          </Row>
+        </TitleContainer>
+      </Header>
       <Container theme={theme}>
         <Row>
-          <Title theme={theme}>HackerNews</Title>
           <SettingsWrapper>
             <ThemeSwitcher theme={theme} setTheme={setTheme} />
             <OddEvenFilter oddEvenFilter={oddEvenFilter} setOddEvenFilter={setOddEvenFilter} theme={theme} />

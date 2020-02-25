@@ -12,6 +12,49 @@ export const Wrapper = styled.div`
 
 export const GoogleFonts = importGoogleFonts(createGlobalStyle, null, [ 'Roboto' ]);
 
+export const TitleContainer = styled.div`
+  width: 100%;
+  min-width: 375px;
+  margin-right: auto;
+  margin-left: auto;
+  @media (min-width: 576px) {
+    max-width: 540px;
+  }
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
+`;
+
+export const Header = styled.div`
+  background: ${props => (props.theme === 'Light' ? '#eeeeee' : '#333333')};
+`;
+
+export const Row = styled.div`
+  padding-right: 15px;
+  padding-left: 15px;
+`;
+
+export const Title = styled.h1`
+  font-size: 40px;
+  font-weight: 500;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: ${props => (props.theme === 'Light' ? '#0085a1' : '#00d1b2')};
+  margin-top: 0;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  @media (min-width: 992px) {
+    font-size: 80px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+`;
+
 export const Container = styled.div`
   width: 100%;
   min-width: 375px;
@@ -29,24 +72,6 @@ export const Container = styled.div`
   }
   @media (min-width: 1200px) {
     max-width: 1140px;
-  }
-`;
-
-export const Row = styled.div`
-  padding-right: 15px;
-  padding-left: 15px;
-`;
-
-export const Title = styled.h1`
-  font-size: 40px;
-  font-weight: 500;
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: ${props => (props.theme === 'Light' ? '#0085a1' : '#00d1b2')};
-  margin-top: 0;
-  padding-top: 30px;
-  @media (min-width: 992px) {
-    font-size: 80px;
-    padding-top: 60px;
   }
 `;
 
