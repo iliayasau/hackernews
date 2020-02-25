@@ -4,19 +4,18 @@ import { getLinkPreview } from 'link-preview-js';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import {
   GoogleFonts, Container, Title, Filter, List, ListItem,
-  ImageContainer, BaseImage, LinkContainer, Link, Button
+  ImageContainer, Image, LinkContainer, Link, Button
 } from './styles';
 
-function Image({ url, alt }) {
+function Thumbnail({ url, alt }) {
   const [image, setImage] = React.useState('');
 
   React.useEffect(() => {
     async function getImage() {
       const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       const response = await getLinkPreview(proxyUrl+url);
-      if (response && response.images.length) {
+      if (response && response.images.length && !response.images[0].includes(proxyUrl)) {
         const { images } = response;
-        console.log('images: ', images);
         setImage(images[0]);
       } else {
         setImage('https://icons.iconarchive.com/icons/thehoth/seo/256/seo-article-icon.png');
@@ -26,7 +25,7 @@ function Image({ url, alt }) {
   }, [url]);
 
   return (
-    <BaseImage src={image} alt={alt} />
+    <Image src={image} alt={alt} />
   );
 }
 
@@ -45,7 +44,7 @@ function HackerNewsPosts({ posts, filter }) {
           return (
             <ListItem key={post.id}>
               <ImageContainer>
-                <Image url={post.url} alt={post.title} />
+                <Thumbnail url={post.url} alt={post.title} />
               </ImageContainer>
               <LinkContainer>
                 <Link href={post.url}>{post.title}</Link>
