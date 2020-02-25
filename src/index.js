@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { getLinkPreview } from 'link-preview-js';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import {
-  Wrapper, GoogleFonts, Container, Title, SwitchContainer, Switch, RadioGroup, Radio,
+  Wrapper, GoogleFonts, Container, Row, Title, SettingsWrapper, Form, SwitchContainer, Switch, RadioGroup, Radio,
   Label, Filter, List, ListItem, ImageContainer, Image, LinkContainer, Link, ButtonWrapper, Button
 } from './styles';
 
@@ -37,18 +37,18 @@ function ThemeSwitcher({ theme, setTheme }) {
     newTheme = 'Light';
   }
   return (
-    <form>
+    <Form>
       <SwitchContainer>
         <Switch type="checkbox" id="switchTheme" checked={theme === 'Dark'} onChange={() => setTheme(newTheme)} />
         <Label for="switchTheme" theme={theme}>Selected theme: {theme}</Label>
       </SwitchContainer>
-    </form>
+    </Form>
   );
 }
 
 function OddEvenFilter({ oddEvenFilter, setOddEvenFilter, theme }) {
   return (
-    <form>
+    <Form>
       <RadioGroup>
         <Radio>
           <input
@@ -84,7 +84,7 @@ function OddEvenFilter({ oddEvenFilter, setOddEvenFilter, theme }) {
           <Label for="button3" theme={theme}>Even</Label>
         </Radio>
       </RadioGroup>
-    </form>
+    </Form>
   );
 }
 
@@ -159,7 +159,7 @@ function App() {
     setQuantity(updatedQuantity);
   }
 
-  // useBottomScrollListener(loadMorePosts);
+  useBottomScrollListener(loadMorePosts);
 
   function filterPosts(event) {
     const value = event.target.value.toLowerCase();
@@ -170,16 +170,20 @@ function App() {
     <Wrapper theme={theme}>
       <GoogleFonts />
       <Container theme={theme}>
-        <Title theme={theme}>HackerNews</Title>
-        <ThemeSwitcher theme={theme} setTheme={setTheme} />
-        <OddEvenFilter oddEvenFilter={oddEvenFilter} setOddEvenFilter={setOddEvenFilter} theme={theme} />
-        <Filter placeholder="Filter" onChange={e => filterPosts(e)} />
-        <HackerNewsPosts posts={posts} filter={filter} oddEvenFilter={oddEvenFilter} theme={theme} />
-        <ButtonWrapper>
-          <Button onClick={() => loadMorePosts()}>
-            Load more posts
-          </Button>
-        </ButtonWrapper>
+        <Row>
+          <Title theme={theme}>HackerNews</Title>
+          <SettingsWrapper>
+            <ThemeSwitcher theme={theme} setTheme={setTheme} />
+            <OddEvenFilter oddEvenFilter={oddEvenFilter} setOddEvenFilter={setOddEvenFilter} theme={theme} />
+          </SettingsWrapper>
+          <Filter placeholder="Filter" onChange={e => filterPosts(e)} />
+          <HackerNewsPosts posts={posts} filter={filter} oddEvenFilter={oddEvenFilter} theme={theme} />
+          <ButtonWrapper>
+            <Button onClick={() => loadMorePosts()}>
+              Load more posts
+            </Button>
+          </ButtonWrapper>
+        </Row>
       </Container>
     </Wrapper>
   );

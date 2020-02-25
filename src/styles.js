@@ -14,8 +14,6 @@ export const GoogleFonts = importGoogleFonts(createGlobalStyle, null, [ 'Roboto'
 export const Container = styled.div`
   width: 100%;
   background: ${props => (props.theme === 'Light' ? 'white' : '#424242')};
-  padding-right: 15px;
-  padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
   @media (min-width: 576px) {
@@ -32,6 +30,11 @@ export const Container = styled.div`
   }
 `;
 
+export const Row = styled.div`
+  padding-right: 15px;
+  padding-left: 15px;
+`;
+
 export const Title = styled.h1`
   font-size: 40px;
   font-weight: 500;
@@ -45,9 +48,29 @@ export const Title = styled.h1`
   }
 `;
 
+export const SettingsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  @media (min-width: 992px) {
+    flex-wrap: nowrap;
+  }
+`;
+
+export const Form = styled.form`
+  display: block;
+  width: 100%;
+  padding-bottom: 15px;
+  @media (min-width: 992px) {
+    width: 50%;
+    padding-bottom: 30px;
+  }
+`;
+
 export const SwitchContainer = styled.div`
   position: relative;
-  height: 50px;
 `;
 
 export const Switch = styled.input`
@@ -62,11 +85,16 @@ export const Switch = styled.input`
   &+label {
     position: relative;
     display: initial;
-    font-size: 1rem;
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
     line-height: initial;
-    padding-left: 3.5rem;
+    padding-left: 4rem;
     padding-top: 0.5rem;
     cursor: pointer;
+    @media (min-width: 992px) {
+      padding-top: 0.4rem;
+      font-size: 21px;
+    }
   }
   &+label::before {
     position: absolute;
@@ -104,17 +132,17 @@ export const Switch = styled.input`
 
 export const RadioGroup = styled.div`
   width: 100%;
-  margin-bottom: 30px;
   display: flex;
+  justify-content: flex-start;
   flex-wrap: nowrap;
   align-items: center;
-  @media (min-width: 992px) {
-    width: 50%;
-  }
 `;
 
 export const Radio = styled.div`
   width: 33.3333%;
+  @media (min-width: 992px) {
+    width: 25%;
+  }
 `;
 
 export const Label = styled.label`
@@ -222,7 +250,7 @@ export const Link = styled.a`
 `;
 
 export const ButtonWrapper = styled.div`
-  padding-bottom: 60px;
+  min-height: 100px;
 `;
 
 export const Button = styled.button`
