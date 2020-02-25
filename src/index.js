@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { getLinkPreview } from 'link-preview-js';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import {
-  GoogleFonts, Container, Title, Filter, List, ListItem,
-  ImageContainer, Image, LinkContainer, Link, Button
+  GoogleFonts, Container, Title, RadioGroup, Radio, Label, Filter,
+  List, ListItem, ImageContainer, Image, LinkContainer, Link, Button
 } from './styles';
 
 function Thumbnail({ url, alt }) {
@@ -14,7 +14,7 @@ function Thumbnail({ url, alt }) {
     async function getImage() {
       const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       const response = await getLinkPreview(proxyUrl+url);
-      if (response && response.images.length && !response.images[0].includes(proxyUrl)) {
+      if (response && await response.images.length && !response.images[0].includes(proxyUrl)) {
         const { images } = response;
         setImage(images[0]);
       } else {
@@ -29,16 +29,64 @@ function Thumbnail({ url, alt }) {
   );
 }
 
-function HackerNewsPosts({ posts, filter }) {
+function OddEvenFilter({ oddEvenFilter, setOddEvenFilter }) {
+
+  return (
+    <form>
+      <RadioGroup>
+        <Radio>
+          <input
+            type="radio"
+            name="odd-even"
+            value="0"
+            id="button1"
+            checked={oddEvenFilter === 0}
+            onClick={() => setOddEvenFilter(0)}
+          />
+          <Label for="button1">All</Label>
+        </Radio>
+        <Radio>
+          <input
+            type="radio"
+            name="odd-even"
+            value="1"
+            id="button2"
+            checked={oddEvenFilter === 1}
+            onClick={() => setOddEvenFilter(1)}
+          />
+          <Label for="button2">Odd</Label>
+        </Radio>
+        <Radio>
+          <input
+            type="radio"
+            name="odd-even"
+            value="2"
+            id="button3"
+            checked={oddEvenFilter === 2}
+            onClick={() => setOddEvenFilter(2)}
+          />
+          <Label for="button3">Even</Label>
+        </Radio>
+      </RadioGroup>
+    </form>
+  );
+}
+
+function HackerNewsPosts({ posts, filter, oddEvenFilter }) {
   if (posts.length === 0) {
     return <div>Loading...</div>;
   }
+
   return (
     <List>
-      {posts.map(post => {
-        if (post && post.title && post.url) {
+      {posts.map((post, index) => {
+        if (post && post.title && (post.url || post.text)) {
           const lowerCaseTitle = post.title.toLowerCase();
-          if (!lowerCaseTitle.includes(filter)) {
+          if (
+            (!lowerCaseTitle.includes(filter)) ||
+            (oddEvenFilter === 1 && ((index + 3) % 2 === 0)) ||
+            (oddEvenFilter === 2 && ((index + 3) % 2 === 1))
+          ) {
             return null;
           }
           return (
@@ -47,7 +95,7 @@ function HackerNewsPosts({ posts, filter }) {
                 <Thumbnail url={post.url} alt={post.title} />
               </ImageContainer>
               <LinkContainer>
-                <Link href={post.url}>{post.title}</Link>
+                <Link href={post.url}>{index + 1}. {post.title}</Link>
               </LinkContainer>
             </ListItem>
           )
@@ -60,6 +108,7 @@ function HackerNewsPosts({ posts, filter }) {
 
 function App() {
   const [posts, setPosts] = React.useState([]);
+  const [oddEvenFilter, setOddEvenFilter] = React.useState(0);
   const [filter, setFilter] = React.useState('');
   const [quantity, setQuantity] = React.useState(30);
 
@@ -105,8 +154,9 @@ function App() {
       <GoogleFonts />
       <Container>
         <Title>HackerNews</Title>
+        <OddEvenFilter oddEvenFilter={oddEvenFilter} setOddEvenFilter={setOddEvenFilter} />
         <Filter placeholder="Filter" onChange={e => filterPosts(e)} />
-        <HackerNewsPosts posts={posts} filter={filter} />
+        <HackerNewsPosts posts={posts} filter={filter} oddEvenFilter={oddEvenFilter} />
         <Button onClick={() => loadMorePosts()}>
           Load more posts
         </Button>

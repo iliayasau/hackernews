@@ -33,6 +33,31 @@ export const Title = styled.h1`
   }
 `;
 
+export const RadioGroup = styled.div`
+  width: 100%;
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  @media (min-width: 992px) {
+    width: 50%;
+  }
+`;
+
+export const Radio = styled.div`
+  width: 33.3333%;
+`;
+
+export const Label = styled.label`
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1;
+  padding-left: 15px;
+  @media (min-width: 992px) {
+    font-size: 21px;
+  }
+`;
+
 export const Filter = styled.input`
   -moz-appearance: none;
   -webkit-appearance: none;
