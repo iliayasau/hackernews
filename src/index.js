@@ -15,7 +15,7 @@ function Thumbnail({ url, alt }) {
     async function getImage() {
       const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       const response = await getLinkPreview(proxyUrl+url);
-      if (response && await response.images.length && !response.images[0].includes(proxyUrl)) {
+      if (response && await response.images &&  response.images.length && !response.images[0].includes(proxyUrl)) {
         const { images } = response;
         setImage(images[0]);
       } else {
