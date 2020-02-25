@@ -177,7 +177,7 @@ function App() {
           </Row>
         </TitleContainer>
       </Header>
-      <Container theme={theme}>
+      <Container>
         <Row>
           <SettingsWrapper>
             <ThemeSwitcher theme={theme} setTheme={setTheme} />
