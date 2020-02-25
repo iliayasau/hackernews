@@ -1,9 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import importGoogleFonts from 'import-google-fonts';
 
-export const GoogleFonts = importGoogleFonts(createGlobalStyle, null, [
-  'Roboto'
-])
+export const GoogleFonts = importGoogleFonts(createGlobalStyle, null, [ 'Roboto' ]);
 
 export const Container = styled.div`
   width: 100%;

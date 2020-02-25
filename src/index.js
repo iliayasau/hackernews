@@ -51,6 +51,7 @@ function HackerNewsPosts({ posts, filter }) {
             </ListItem>
           )
         }
+        return null;
       })}
     </List>
   );
