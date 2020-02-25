@@ -12,12 +12,17 @@ function Image({ url, alt }) {
 
   React.useEffect(() => {
     async function getImage() {
-      let response = await grabity.grabIt(url);
-      if (response && response.image) {
-        const { image } = response;
-        setImage(image);
-      } else {
-        setImage('https://icons.iconarchive.com/icons/thehoth/seo/256/seo-article-icon.png');
+      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+      try {
+        const response = await grabity.grabIt(proxyUrl+url);
+        if (response && response.image) {
+          const { image } = response;
+          setImage(image);
+        } else {
+          setImage('https://icons.iconarchive.com/icons/thehoth/seo/256/seo-article-icon.png');
+        }
+      } catch (err) {
+        console.error(err);
       }
     }
     getImage();
