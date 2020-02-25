@@ -4,7 +4,7 @@ import { getLinkPreview } from 'link-preview-js';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import {
   Wrapper, GoogleFonts, Container, Row, Title, SettingsWrapper, Form, SwitchContainer, Switch, RadioGroup, Radio,
-  Label, Filter, List, ListItem, ImageContainer, Image, LinkContainer, Link, ButtonWrapper, Button
+  Label, Filter, Loading, List, ListItem, ImageContainer, Image, LinkContainer, Link, ButtonWrapper, Button
 } from './styles';
 
 function Thumbnail({ url, alt }) {
@@ -90,7 +90,7 @@ function OddEvenFilter({ oddEvenFilter, setOddEvenFilter, theme }) {
 
 function HackerNewsPosts({ posts, filter, oddEvenFilter, theme }) {
   if (posts.length === 0) {
-    return <div>Loading...</div>;
+    return <Loading theme={theme}>Loading...</Loading>;
   }
 
   return (
@@ -176,10 +176,10 @@ function App() {
             <ThemeSwitcher theme={theme} setTheme={setTheme} />
             <OddEvenFilter oddEvenFilter={oddEvenFilter} setOddEvenFilter={setOddEvenFilter} theme={theme} />
           </SettingsWrapper>
-          <Filter placeholder="Filter" onChange={e => filterPosts(e)} />
+          <Filter placeholder="Filter" theme={theme} onChange={e => filterPosts(e)} />
           <HackerNewsPosts posts={posts} filter={filter} oddEvenFilter={oddEvenFilter} theme={theme} />
           <ButtonWrapper>
-            <Button onClick={() => loadMorePosts()}>
+            <Button theme={theme} onClick={() => loadMorePosts()}>
               Load more posts
             </Button>
           </ButtonWrapper>

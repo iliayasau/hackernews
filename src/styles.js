@@ -5,7 +5,8 @@ export const Wrapper = styled.div`
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
+  min-height: 100%;
   background: ${props => (props.theme === 'Light' ? 'white' : '#424242')};
 `;
 
@@ -13,6 +14,7 @@ export const GoogleFonts = importGoogleFonts(createGlobalStyle, null, [ 'Roboto'
 
 export const Container = styled.div`
   width: 100%;
+  min-width: 375px;
   background: ${props => (props.theme === 'Light' ? 'white' : '#424242')};
   margin-right: auto;
   margin-left: auto;
@@ -139,10 +141,7 @@ export const RadioGroup = styled.div`
 `;
 
 export const Radio = styled.div`
-  width: 33.3333%;
-  @media (min-width: 992px) {
-    width: 25%;
-  }
+  width: 25%;
 `;
 
 export const Label = styled.label`
@@ -179,13 +178,24 @@ export const Filter = styled.input`
   padding-top: calc(0.375em - 1px);
   position: relative;
   vertical-align: top;
-  background-color: white;
-  border-color: #dbdbdb;
-  color: #363636;
+  background: ${props => (props.theme === 'Light' ? 'white' : '#424242')};
+  border-color: ${props => (props.theme === 'Light' ? '#dbdbdb' : '#cccccc')};
+  color: ${props => (props.theme === 'Light' ? '#424242' : 'white')};
   box-shadow: none;
   max-width: 100%;
   width: calc(100% - 1.25em);
   margin-bottom: 30px;
+`;
+
+export const Loading = styled.div`
+  padding-bottom: 15px;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: ${props => (props.theme === 'Light' ? '#424242' : 'white')};
+  @media (min-width: 992px) {
+    padding-bottom: 30px;
+    font-size: 21px;
+  }
 `;
 
 export const List = styled.ul`
@@ -208,6 +218,7 @@ export const ImageContainer = styled.div`
   text-align: center;
   padding-bottom: 15px;
   min-height: 200px;
+  flex-shrink: 0;
   @media (min-width: 992px) {
     width: 200px;
     text-align: left;
@@ -219,7 +230,6 @@ export const Image = styled.img`
   width: 200px;
   height: 200px;
   object-fit: cover;
-  flex-shrink: 0;
 `;
 
 export const LinkContainer = styled.div`
@@ -239,10 +249,9 @@ export const Link = styled.a`
   line-height: 1;
   text-decoration: none;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #424242;
-  color: ${props => (props.theme === 'Light' ? '#424242' : '#00d1b2')};
+  color: ${props => (props.theme === 'Light' ? '#0085a1' : '#00d1b2')};
   &:hover {
-    color: #0085a1;
+    color: ${props => (props.theme === 'Light' ? '#00657b' : '#0a8774')};
   }
   @media (min-width: 992px) {
     font-size: 32px;
@@ -256,19 +265,23 @@ export const ButtonWrapper = styled.div`
 export const Button = styled.button`
   display: block;
   float: right;
-  background: #0085a1;
+  background: ${props => (props.theme === 'Light' ? '#0085a1' : '#00d1b2')};
   border: none;
   color: white;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 800;
-  padding: 15px 25px;
+  padding: 10px 15px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  border-radius: 0;
+  border-radius: 5px;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   cursor: pointer;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   &:hover {
-    background: #00657b;
+    background: ${props => (props.theme === 'Light' ? '#00657b' : '#0a8774')};
+  }
+  @media (min-width: 992px) {
+    font-size: 14px;
+    padding: 15px 25px;
   }
 `;
