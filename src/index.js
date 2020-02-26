@@ -54,7 +54,7 @@ function LayoutSwitcher({ theme, layout, setLayout }) {
         List
       </Button>
       <Button theme={theme} selected={layout === 'Grid'} onClick={() => setLayout('Grid')}>
-        Boxes
+        Grid
       </Button>
     </ButtonGroup>
   );
