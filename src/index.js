@@ -4,8 +4,8 @@ import { getLinkPreview } from 'link-preview-js';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import {
   Wrapper, GoogleFonts, Container, Header, TitleContainer, Row, Title, SettingsWrapper, 
-  Form, SwitchContainer, Switch, RadioGroup, Radio, Label, Filter, Loading,
-  List, ListItem, ImageContainer, Image, LinkContainer, Link, ButtonWrapper, Button
+  Form, SwitchContainer, Switch, RadioGroup, Radio, Label, Filter, Loading, List, ListItem,
+  Divider, ImageContainer, Image, LinkContainer, Link, ButtonWrapper, ButtonGroup, Button
 } from './styles';
 
 function Thumbnail({ url, alt }) {
@@ -44,6 +44,19 @@ function ThemeSwitcher({ theme, setTheme }) {
         <Label for="switchTheme" theme={theme}>Selected theme: {theme}</Label>
       </SwitchContainer>
     </Form>
+  );
+}
+
+function LayoutSwitcher({ theme, layout, setLayout }) {
+  return (
+    <ButtonGroup>
+      <Button theme={theme} selected={layout === 'List'} onClick={() => setLayout('List')}>
+        List
+      </Button>
+      <Button theme={theme} selected={layout === 'Grid'} onClick={() => setLayout('Grid')}>
+        Boxes
+      </Button>
+    </ButtonGroup>
   );
 }
 
@@ -89,13 +102,13 @@ function OddEvenFilter({ oddEvenFilter, setOddEvenFilter, theme }) {
   );
 }
 
-function HackerNewsPosts({ posts, filter, oddEvenFilter, theme }) {
+function HackerNewsPosts({ posts, filter, oddEvenFilter, layout, theme }) {
   if (posts.length === 0) {
     return <Loading theme={theme}>Loading...</Loading>;
   }
 
   return (
-    <List>
+    <List layout={layout}>
       {posts.map((post, index) => {
         if (post && post.title && (post.url || post.text)) {
           const lowerCaseTitle = post.title.toLowerCase();
@@ -107,15 +120,18 @@ function HackerNewsPosts({ posts, filter, oddEvenFilter, theme }) {
             return null;
           }
           return (
-            <ListItem key={post.id}>
-              <ImageContainer>
-                <Thumbnail url={post.url} alt={post.title} />
-              </ImageContainer>
-              <LinkContainer>
-                <Link theme={theme} href={post.url}>{index + 1}. {post.title}</Link>
-              </LinkContainer>
-            </ListItem>
-          )
+            <>
+              <ListItem layout={layout} key={post.id}>
+                <ImageContainer layout={layout}>
+                  <Thumbnail url={post.url} alt={post.title} />
+                </ImageContainer>
+                <LinkContainer layout={layout} theme={theme}>
+                  {index + 1}. <Link theme={theme} href={post.url}>{post.title}</Link>
+                </LinkContainer>
+              </ListItem>
+              <Divider layout={layout} theme={theme} />
+            </>
+          );
         }
         return null;
       })}
@@ -126,6 +142,7 @@ function HackerNewsPosts({ posts, filter, oddEvenFilter, theme }) {
 function App() {
   const [posts, setPosts] = React.useState([]);
   const [theme, setTheme] = React.useState('Light');
+  const [layout, setLayout] = React.useState('List');
   const [oddEvenFilter, setOddEvenFilter] = React.useState(0);
   const [filter, setFilter] = React.useState('');
   const [quantity, setQuantity] = React.useState(30);
@@ -181,10 +198,11 @@ function App() {
         <Row>
           <SettingsWrapper>
             <ThemeSwitcher theme={theme} setTheme={setTheme} />
+            <LayoutSwitcher theme={theme} layout={layout} setLayout={setLayout} />
             <OddEvenFilter oddEvenFilter={oddEvenFilter} setOddEvenFilter={setOddEvenFilter} theme={theme} />
           </SettingsWrapper>
           <Filter placeholder="Filter" theme={theme} onChange={e => filterPosts(e)} />
-          <HackerNewsPosts posts={posts} filter={filter} oddEvenFilter={oddEvenFilter} theme={theme} />
+          <HackerNewsPosts posts={posts} filter={filter} oddEvenFilter={oddEvenFilter} layout={layout} theme={theme} />
           <ButtonWrapper>
             <Button theme={theme} onClick={() => loadMorePosts()}>
               Load more posts

@@ -91,7 +91,7 @@ export const Form = styled.form`
   width: 100%;
   padding-bottom: 15px;
   @media (min-width: 992px) {
-    width: 50%;
+    width: 33.3333%;
     padding-bottom: 30px;
   }
 `;
@@ -166,7 +166,7 @@ export const RadioGroup = styled.div`
 `;
 
 export const Radio = styled.div`
-  width: 25%;
+  width: 33.3333%;
 `;
 
 export const Label = styled.label`
@@ -225,16 +225,42 @@ export const Loading = styled.div`
 
 export const List = styled.ul`
   list-style-type: none;
+  display: ${props => (props.layout === 'Grid' ? 'flex' : 'block')};
+  flex-wrap: wrap;
   padding-left: 0;
 `;
 
 export const ListItem = styled.li`
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  flex-direction: ${props => (props.layout === 'Grid' ? 'column' : 'row')};
+  width: ${props => (props.layout === 'Grid' ? '100%' : 'unset')};
+  @media (min-width: 575px) {
+    width: ${props => (props.layout === 'Grid' ? '50%' : 'unset')};
+  }
+  @media (min-width: 767px) {
+    width: ${props => (props.layout === 'Grid' ? '33.3333%' : 'unset')};
+  }
   @media (min-width: 992px) {
-    flex-wrap: nowrap;
+    flex-wrap: ${props => (props.layout === 'Grid' ? 'wrap' : 'nowrap')};
+    padding-bottom: 30px;
+  }
+`;
+
+export const Divider = styled.hr`
+  width: 100%;
+  height: 1px;
+  margin-bottom: 15px;
+  border: none;
+  display: block;
+  background: ${props => (props.theme === 'Light' ? '#dddddd' : '#666666')};
+  @media (min-width: 575px) {
+    display: ${props => (props.layout === 'Grid' ? 'none' : 'block')};
+  }
+  @media (min-width: 992px) {
+    margin-bottom: 30px;
   }
 `;
 
@@ -242,12 +268,14 @@ export const ImageContainer = styled.div`
   width: 100%;
   text-align: center;
   padding-bottom: 15px;
+  margin-bottom: 0;
   min-height: 200px;
   flex-shrink: 0;
   @media (min-width: 992px) {
     width: 200px;
     text-align: left;
     padding-bottom: 0;
+    margin-bottom: ${props => (props.layout === 'Grid' ? '15px' : '0')};
   }
 `;
 
@@ -261,25 +289,24 @@ export const LinkContainer = styled.div`
   width: 100%;
   text-align: center;
   padding-left: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  color: ${props => (props.theme === 'Light' ? '#424242' : 'white')};
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   @media (min-width: 992px) {
     width: unset;
     text-align: left;
     padding-left: 30px;
+    font-size: ${props => (props.layout === 'Grid' ? '24px' : '32px')};
   }
 `;
 
 export const Link = styled.a`
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1;
   text-decoration: none;
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: ${props => (props.theme === 'Light' ? '#0085a1' : '#00d1b2')};
   &:hover {
     color: ${props => (props.theme === 'Light' ? '#00657b' : '#0a8774')};
-  }
-  @media (min-width: 992px) {
-    font-size: 32px;
   }
 `;
 
@@ -287,15 +314,34 @@ export const ButtonWrapper = styled.div`
   min-height: 100px;
 `;
 
+export const ButtonGroup = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  & > button:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+  & > button:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+`;
+
+const handleButtonBackground = (theme, selected) => {
+	if (theme === 'Light' && selected) return '#00657b';
+  else if (theme === 'Dark' && selected) return '#0a8774';
+  else if (theme === 'Light' && !selected) return '#0085a1';
+  else if (theme === 'Dark' && !selected) return '#00d1b2';
+}
+
 export const Button = styled.button`
   display: block;
   float: right;
-  background: ${props => (props.theme === 'Light' ? '#0085a1' : '#00d1b2')};
+  background: ${props => handleButtonBackground(props.theme, props.selected)};
   border: none;
   color: white;
   font-size: 12px;
   font-weight: 800;
   padding: 10px 15px;
+  margin-bottom: 15px;
   letter-spacing: 1px;
   text-transform: uppercase;
   border-radius: 5px;
@@ -308,5 +354,6 @@ export const Button = styled.button`
   @media (min-width: 992px) {
     font-size: 14px;
     padding: 15px 25px;
+    margin-bottom: 30px;
   }
 `;
