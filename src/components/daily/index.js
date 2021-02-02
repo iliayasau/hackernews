@@ -17,7 +17,7 @@ const Daily = ({
             {item.weather[0].main &&
               <Icon description={item.weather[0].main} size="100" />
             }
-            <div class="temperature">
+            <div className="temperature">
               {parseInt(tuc.k2c(item.temp.day))}&#176;
             </div>
           </div>

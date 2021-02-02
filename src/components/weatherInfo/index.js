@@ -6,8 +6,6 @@ import Daily from '../daily';
 const WeatherInfo = ({
   weather, nextDays
 }) => {
-  console.log('nextDays: ', nextDays);
-  console.log('weather: ', weather);
   return (
     <div className="weather-info">
       <Current

@@ -6,15 +6,15 @@ const Current = ({
   temperature
 }) => {
   return (
-    <div class="current-weather">
+    <div className="current-weather">
       <h2>Today</h2>
-      <div class="icon-info-wrapper">
+      <div className="icon-info-wrapper">
         {description && <Icon description={description} size="200" />}
-        <div class="info">
-          <div class="temperature">
+        <div className="info">
+          <div className="temperature">
             {temperature}&#176;
           </div>
-          <div class="description">
+          <div className="description">
             {description}
           </div>
         </div>
